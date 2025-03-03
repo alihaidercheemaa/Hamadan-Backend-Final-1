@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const certificationController = require('../controllers/cerificationController');
+const certificationController = require('../controllers/certificationController');
 const { protect, admin } = require('../middleware/auth');
 
 // Public Routes (No authentication required)
