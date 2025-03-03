@@ -11,9 +11,10 @@ const protect = async (req, res, next) => {
             // Log the token for debugging
             console.log('Token received:', token);
 
+            // Verify the token
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-            // Use Sequelize's `findByPk` to find the user by their primary key (userId)
+            // Use Sequelize's findByPk to find the user by their primary key (userId)
             const user = await User.findByPk(decoded.userId);
 
             if (!user) {
@@ -27,8 +28,16 @@ const protect = async (req, res, next) => {
 
             next();
         } catch (error) {
-            console.error(`Token verification failed: ${error}`);
-            return res.status(401).json({ message: 'Not authorized, token failed' });
+            console.error(Token verification failed: ${error.message});
+
+            // Differentiate between token expiration and other errors
+            if (error.name === 'TokenExpiredError') {
+                return res.status(401).json({ message: 'Not authorized, token expired' });
+            } else if (error.name === 'JsonWebTokenError') {
+                return res.status(401).json({ message: 'Not authorized, invalid token' });
+            } else {
+                return res.status(401).json({ message: 'Not authorized, token failed' });
+            }
         }
     } else {
         console.log('No token provided in request');
@@ -40,8 +49,8 @@ const admin = (req, res, next) => {
     if (req.user && req.user.isAdmin) {
         next();
     } else {
-        res.status(401);
-        throw new Error('Not authorized as an admin');
+        console.log('User is not an admin:', req.user);
+        return res.status(403).json({ message: 'Not authorized as an admin' });
     }
 };
 
