@@ -1,5 +1,4 @@
 const Certification = require('../models/Certification');
-const sendEmail = require('../utils/sendEmail'); 
 
 // 1. Create a new certification
 exports.createCertification = async (req, res) => {
@@ -136,10 +135,6 @@ exports.approveCertification = async (req, res) => {
         certification.status = "approved";
         await certification.save();
 
-        // Send approval email
-        // const emailText = Dear ${certification.firstName} ${certification.lastName},\n\nYour certification (${certification.certName}) has been approved. Thank you for your payment of $${certification.amountPaid}.\n\nBest regards,\nThe Certification Team;
-        // await sendEmail(certification.email, "Certification Approved", emailText);
-
         res.status(200).json({ message: "Certification approved successfully", certification });
     } catch (error) {
         res.status(400).json({ error: error.message });
@@ -159,10 +154,6 @@ exports.rejectCertification = async (req, res) => {
         // Update status to "rejected"
         certification.status = "rejected";
         await certification.save();
-
-        // Send rejection email
-        // const emailText = Dear ${certification.firstName} ${certification.lastName},\n\nWe regret to inform you that your certification (${certification.certName}) has been rejected. If you have any questions, please contact us.\n\nBest regards,\nThe Certification Team;
-        // await sendEmail(certification.email, "Certification Rejected", emailText);
 
         res.status(200).json({ message: "Certification rejected successfully", certification });
     } catch (error) {
