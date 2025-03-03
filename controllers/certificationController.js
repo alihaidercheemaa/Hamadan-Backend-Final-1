@@ -137,8 +137,8 @@ exports.approveCertification = async (req, res) => {
         await certification.save();
 
         // Send approval email
-        const emailText = Dear ${certification.firstName} ${certification.lastName},\n\nYour certification (${certification.certName}) has been approved. Thank you for your payment of $${certification.amountPaid}.\n\nBest regards,\nThe Certification Team;
-        await sendEmail(certification.email, "Certification Approved", emailText);
+        // const emailText = Dear ${certification.firstName} ${certification.lastName},\n\nYour certification (${certification.certName}) has been approved. Thank you for your payment of $${certification.amountPaid}.\n\nBest regards,\nThe Certification Team;
+        // await sendEmail(certification.email, "Certification Approved", emailText);
 
         res.status(200).json({ message: "Certification approved successfully", certification });
     } catch (error) {
@@ -161,8 +161,8 @@ exports.rejectCertification = async (req, res) => {
         await certification.save();
 
         // Send rejection email
-        const emailText = Dear ${certification.firstName} ${certification.lastName},\n\nWe regret to inform you that your certification (${certification.certName}) has been rejected. If you have any questions, please contact us.\n\nBest regards,\nThe Certification Team;
-        await sendEmail(certification.email, "Certification Rejected", emailText);
+        // const emailText = Dear ${certification.firstName} ${certification.lastName},\n\nWe regret to inform you that your certification (${certification.certName}) has been rejected. If you have any questions, please contact us.\n\nBest regards,\nThe Certification Team;
+        // await sendEmail(certification.email, "Certification Rejected", emailText);
 
         res.status(200).json({ message: "Certification rejected successfully", certification });
     } catch (error) {
