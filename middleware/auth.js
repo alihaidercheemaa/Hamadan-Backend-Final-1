@@ -13,7 +13,7 @@ const protect = async (req, res, next) => {
 
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-            // Use Sequelize's findByPk to find the user by their primary key (userId)
+            // Use Sequelize's `findByPk` to find the user by their primary key (userId)
             const user = await User.findByPk(decoded.userId);
 
             if (!user) {
@@ -27,7 +27,7 @@ const protect = async (req, res, next) => {
 
             next();
         } catch (error) {
-            console.error(Token verification failed: ${error});            
+            console.error(`Token verification failed: ${error}`);
             return res.status(401).json({ message: 'Not authorized, token failed' });
         }
     } else {
