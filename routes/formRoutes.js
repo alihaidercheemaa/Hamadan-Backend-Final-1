@@ -24,7 +24,7 @@ const { protect, admin } = require('../middleware/auth');
 router.post('/register', createMember);
 
 // Admin routes for member management
-router.get('/all', protect, admin, getAllMembers);
+router.get('/all', getAllMembers);
 router.get('/approved',  getApprovedMembers);
 router.get('/rejected', protect, admin, getRejectedMembers);
 router.get('/', protect, admin, getMembers);
