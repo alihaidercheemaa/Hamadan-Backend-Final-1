@@ -58,14 +58,17 @@ const Member = sequelize.define('Member', {
         type: DataTypes.ENUM('upi', 'bankTransfer', 'razorpay'),
         allowNull: false,
     },
+
+
     razorpayOrderId: {
         type: DataTypes.STRING,
         unique: true
-    },
-    razorpayPaymentId: {
+      },
+      razorpayPaymentId: {
         type: DataTypes.STRING,
         unique: true
-    },      
+      },      
+    
     status: {
         type: DataTypes.ENUM('pending', 'approved', 'rejected'),
         allowNull: false,
@@ -75,17 +78,4 @@ const Member = sequelize.define('Member', {
     timestamps: true,
 });
 
-// 🚨 Force-Sync for Member Model Only (DEV ONLY) 🚨
-// This will drop and recreate ONLY the Member table
-// Use this during development/testing only
-if (process.env.NODE_ENV === 'development') {
-    Member.sync({ force: true })
-        .then(() => {
-            console.log('✅ Member table force-synced successfully.');
-        })
-        .catch((error) => {
-            console.error('❌ Error force-syncing Member table:', error);
-        });
-}
-
-module.exports = Member;
+module.exports = Member;
